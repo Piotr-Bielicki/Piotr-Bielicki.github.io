@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Who is Piotrek</title>
-
+    <!-- Ikona białego kwadracika w karcie przeglądarki -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22/></svg>">
+    <!-- Pobieramy darmowe ikony od FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #0a0a0a; 
+            background-color: #0a0a0a; /* Głęboka, matowa czerń */
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -22,7 +24,7 @@
             position: relative;
         }
 
-      
+        /* Subtelna poświata 3D w tle */
         body::before {
             content: '';
             position: absolute;
@@ -44,18 +46,18 @@
             align-items: center;
         }
 
-        
+        /* Kontener na efekt pisania */
         .typing-container {
             font-size: 2.5rem;
             font-weight: 600;
             letter-spacing: -0.5px;
-            margin-bottom: 12px;
+            margin-bottom: 30px; /* Odstęp pod napisem przed ikonami */
             min-height: 3rem;
             display: flex;
             align-items: center;
         }
 
-      
+        /* Mrugający kursor */
         .cursor {
             display: inline-block;
             width: 2.5px;
@@ -70,17 +72,7 @@
             50% { opacity: 0; }
         }
 
-       
-        .subtitle {
-            font-size: 1rem;
-            color: #666666;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-            font-weight: 500;
-        }
-
-        
+        /* Kontener na ikony */
         .icons {
             display: flex;
             gap: 30px;
@@ -93,7 +85,7 @@
             transition: color 0.3s ease, transform 0.3s ease;
         }
 
-      
+        /* Efekt najechania myszką (Hover) */
         .icons a:hover {
             color: #ffffff;
             transform: translateY(-4px);
@@ -106,8 +98,6 @@
         <div class="typing-container">
             <span id="name"></span><span class="cursor"></span>
         </div>
-        
-       
 
         <div class="icons">
             <a href="https://www.instagram.com/whoispiotrek/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
@@ -118,7 +108,7 @@
 
     <script>
         const textToType = "Who is Piotrek?"; 
-        const speed = 120; 
+        const speed = 120; // Szybkość pisania w milisekundach
         let i = 0;
 
         function typeWriter() {
@@ -129,7 +119,6 @@
             }
         }
 
-       
         window.onload = typeWriter;
     </script>
 
