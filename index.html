@@ -19,23 +19,49 @@
             --text: #ffffff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            cursor: none; 
+        }
+
+        html, body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        html::-webkit-scrollbar, body::-webkit-scrollbar {
+            display: none;
+        }
 
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: 'Helvetica Neue', Arial, sans-serif;
             overflow-x: hidden;
-            height: 200vh; 
+            height: 200vh;
         }
 
         .cursor {
             position: fixed; top: 0; left: 0; width: 12px; height: 12px;
             background: #fff; border-radius: 50%; pointer-events: none;
             z-index: 9999; transform: translate(-50%, -50%);
-            mix-blend-mode: difference; transition: width 0.3s, height 0.3s;
+            mix-blend-mode: difference; 
+            transition: width 0.3s, height 0.3s, opacity 0.5s ease;
+            opacity: 0; 
         }
+        
         .cursor.hovered { width: 50px; height: 50px; background: transparent; border: 2px solid #fff; }
+
+        @media (pointer: coarse) {
+            .cursor {
+                display: none !important;
+            }
+            * {
+                cursor: auto;
+            }
+        }
 
         .webgl {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -53,32 +79,32 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 30px;
+            width: 100%;
+            padding: 0 20px;
+            text-align: center;
+            flex-wrap: wrap;
         }
 
-       
         .massive-text {
-            font-size: clamp(3rem, 4vw, 12rem);
+            font-size: clamp(1.8rem, 4vw, 12rem);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -0.05em;
-            line-height: 1;
+            line-height: 1.1;
             text-shadow: 0 0 20px rgba(0,0,0,0.8);
-            white-space: nowrap;
         }
 
-       
         .blinking-cursor {
             display: inline-block;
-            width: clamp(8px, 1.5vw, 20px);
-            height: clamp(3rem, 8vw, 10rem);
+            width: clamp(6px, 1vw, 20px);
+            height: clamp(1.8rem, 4vw, 12rem);
             background-color: #ffffff;
-            margin-left: 15px;
+            margin-left: 10px;
             animation: blink 1s step-end infinite;
             vertical-align: text-bottom;
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        
         .icons { display: flex; gap: 40px; pointer-events: auto; }
         .icons a { color: #ffffff; font-size: 2rem; text-decoration: none; transition: 0.3s; opacity: 0.5; }
         .icons a:hover { transform: translateY(-5px); opacity: 1; }
@@ -95,43 +121,47 @@
         </div>
         
         <div class="icons">
-            <a href="https://www.instagram.com/whoispiotrek/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.linkedin.com/in/piotr-bielicki-7b82b4278/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:bielickipiotr@outlook.com" title="Wyślij Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://www.instagram.com/whoispiotrek/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/piotr-bielicki-7b82b4278/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:bielickipiotr@outlook.com"><i class="fas fa-envelope"></i></a>
         </div>
     </div>
 
     <script>
-        
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        
         const cursor = document.getElementById('cursor');
+        let cursorTimeout;
+
         document.addEventListener('mousemove', (e) => {
             gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: "power2.out" });
+            cursor.style.opacity = '1';
+            
+            clearTimeout(cursorTimeout);
+            cursorTimeout = setTimeout(() => {
+                cursor.style.opacity = '0';
+            }, 2000);
         });
+
         document.querySelectorAll('.icons a').forEach(link => {
             link.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             link.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
 
-        
         const textToType = "Who is Piotrek?"; 
         let i = 0;
         function typeWriter() {
             if (i < textToType.length) {
                 document.getElementById("name").innerHTML += textToType.charAt(i);
                 i++;
-                // Losowe opóźnienia dla bardziej naturalnego efektu pisania
                 const speed = Math.random() * (150 - 80) + 80;
                 setTimeout(typeWriter, speed);
             }
         }
         setTimeout(typeWriter, 500);
 
-       
         const canvas = document.querySelector('canvas.webgl');
         const scene = new THREE.Scene();
         const geometry = new THREE.TorusKnotGeometry(10, 3, 200, 32);
@@ -155,12 +185,10 @@
             mouseY = (event.clientY - windowHalfY);
         });
 
-        
         gsap.registerPlugin(ScrollTrigger);
         gsap.to(torusKnot.rotation, { x: Math.PI * 2, z: Math.PI, scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 } });
         gsap.to(camera.position, { z: 12, scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 } });
 
-        
         const clock = new THREE.Clock();
         function animate() {
             const time = clock.getElapsedTime();
