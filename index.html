@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Who is Piotrek</title>
-    <!-- Pobieramy darmowe ikony od FontAwesome -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #121212; /* Ciemnoszare, eleganckie tło */
+            background-color: #0a0a0a; 
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -18,21 +18,50 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* Kontener na efekt pisania */
+      
+        body::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        
         .typing-container {
             font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 30px;
-            min-height: 3rem; /* Zapobiega skakaniu strony */
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
         }
 
-        /* Mrugający kursor */
+      
         .cursor {
             display: inline-block;
-            width: 3px;
-            background-color: #fff;
+            width: 2.5px;
+            height: 2.2rem;
+            background-color: #ffffff;
+            margin-left: 4px;
             animation: blink 1s step-end infinite;
         }
 
@@ -41,43 +70,55 @@
             50% { opacity: 0; }
         }
 
-        /* Kontener na ikony */
+       
+        .subtitle {
+            font-size: 1rem;
+            color: #666666;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        
         .icons {
             display: flex;
-            gap: 25px;
+            gap: 30px;
         }
 
         .icons a {
-            color: #a0a0a0;
-            font-size: 2rem;
+            color: #555555;
+            font-size: 1.6rem;
             text-decoration: none;
             transition: color 0.3s ease, transform 0.3s ease;
         }
 
-        /* Efekt najechania myszką (Hover) */
+      
         .icons a:hover {
             color: #ffffff;
-            transform: translateY(-5px);
+            transform: translateY(-4px);
         }
     </style>
 </head>
 <body>
 
-    <div class="typing-container">
-        <span id="name"></span><span class="cursor">&nbsp;</span>
-    </div>
+    <div class="content-wrapper">
+        <div class="typing-container">
+            <span id="name"></span><span class="cursor"></span>
+        </div>
+        
+       
 
-    <div class="icons">
-        <!-- Zmień atrybut href na swoje linki -->
-        <a href="https://www.instagram.com/whoispiotrek/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.linkedin.com/in/piotr-bielicki-7b82b4278/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="mailto:bielickipiotr@outlook.com" title="Wyślij Email"><i class="fas fa-envelope"></i></a>
+        <div class="icons">
+            <a href="https://www.instagram.com/whoispiotrek/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/piotr-bielicki-7b82b4278/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:bielickipiotr@outlook.com" title="Wyślij Email"><i class="fas fa-envelope"></i></a>
+        </div>
     </div>
 
     <script>
-        // Tutaj wpisz nazwę, która ma się pojawiać
         const textToType = "Who is Piotrek?"; 
-        const speed = 100; // Szybkość pisania w milisekundach
+        const speed = 120; 
         let i = 0;
 
         function typeWriter() {
@@ -88,7 +129,7 @@
             }
         }
 
-        // Uruchom animację po załadowaniu strony
+       
         window.onload = typeWriter;
     </script>
 
