@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who is Piotrek</title>
+    <!-- Pobieramy darmowe ikony od FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Ciemnoszare, eleganckie tło */
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Kontener na efekt pisania */
+        .typing-container {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            min-height: 3rem; /* Zapobiega skakaniu strony */
+        }
+
+        /* Mrugający kursor */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #fff;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Kontener na ikony */
+        .icons {
+            display: flex;
+            gap: 25px;
+        }
+
+        .icons a {
+            color: #a0a0a0;
+            font-size: 2rem;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Efekt najechania myszką (Hover) */
+        .icons a:hover {
+            color: #ffffff;
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="typing-container">
+        <span id="name"></span><span class="cursor">&nbsp;</span>
+    </div>
+
+    <div class="icons">
+        <!-- Zmień atrybut href na swoje linki -->
+        <a href="https://www.instagram.com/whoispiotrek/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/piotr-bielicki-7b82b4278/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:bielickipiotr@outlook.com" title="Wyślij Email"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <script>
+        // Tutaj wpisz nazwę, która ma się pojawiać
+        const textToType = "Who is Piotrek?"; 
+        const speed = 100; // Szybkość pisania w milisekundach
+        let i = 0;
+
+        function typeWriter() {
+            if (i < textToType.length) {
+                document.getElementById("name").innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        // Uruchom animację po załadowaniu strony
+        window.onload = typeWriter;
+    </script>
+
+</body>
+</html>
